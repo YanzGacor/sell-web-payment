@@ -431,11 +431,11 @@
             <p>Terima kasih telah melakukan pembayaran. Silahkan hubungi penjual untuk konfirmasi lebih lanjut.</p>
             
             <div class="contact-buttons">
-                <a href="https://wa.me/6283895361019" class="contact-btn whatsapp-btn" target="_blank">
+                <a id="whatsappBtn" href="#" class="contact-btn whatsapp-btn" target="_blank">
                     <img src="https://files.catbox.moe/j2dk59.jpg" alt="WhatsApp">
                     WhatsApp Penjual
                 </a>
-                <a href="https://t.me/yanzturu" class="contact-btn telegram-btn" target="_blank">
+                <a id="telegramBtn" href="#" class="contact-btn telegram-btn" target="_blank">
                     <img src="https://files.catbox.moe/pn0psm.png" alt="Telegram">
                     Telegram Penjual
                 </a>
@@ -444,6 +444,9 @@
     </div>
     
     <script>
+        let currentPaymentMethod = '';
+        let paymentAmount = '';
+        
         function showPayment(method) {
             // Sembunyikan semua metode pembayaran
             document.getElementById('dana-payment').style.display = 'none';
@@ -463,9 +466,17 @@
         function processPayment(event, method) {
             event.preventDefault();
             
-            // Simpan data pembayaran (dalam aplikasi nyata, ini akan dikirim ke server)
+            // Simpan data pembayaran
+            currentPaymentMethod = method;
             const amountInput = document.getElementById(method.toLowerCase() + '-amount');
-            const amount = amountInput.value;
+            paymentAmount = amountInput.value;
+            
+            // Update link WhatsApp dan Telegram dengan nominal pembayaran
+            const whatsappMessage = `Halo, saya sudah melakukan pembayaran via ${method} sebesar Rp ${formatNumber(paymentAmount)}. Mohon konfirmasinya.`;
+            const telegramMessage = `Halo, saya sudah melakukan pembayaran via ${method} sebesar Rp ${formatNumber(paymentAmount)}. Mohon konfirmasinya.`;
+            
+            document.getElementById('whatsappBtn').href = `https://wa.me/6283895361019?text=${encodeURIComponent(whatsappMessage)}`;
+            document.getElementById('telegramBtn').href = `https://t.me/yanzturu?text=${encodeURIComponent(telegramMessage)}`;
             
             // Tampilkan modal konfirmasi
             const modal = document.getElementById('confirmationModal');
@@ -473,6 +484,10 @@
             
             // Reset form
             event.target.reset();
+        }
+        
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
         
         // Tutup modal ketika klik di luar area modal
@@ -484,4 +499,4 @@
         });
     </script>
 </body>
-  </html>
+</html>
