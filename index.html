@@ -3,500 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran Digital</title>
+    <title>Metode Pembayaran</title>
     <style>
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --danger: #d63031;
-            --light: #f5f6fa;
-            --dark: #2d3436;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background-image: url('https://files.catbox.moe/kut2wk.jpeg');
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url('https://files.catbox.moe/qoztlx.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: var(--dark);
-            line-height: 1.6;
+            background-color: #f5f5f5;
         }
-        
         .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
             background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
         }
-        
-        .payment-header {
+        h1 {
+            color: #2c3e50;
             text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .payment-header h1 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 2.2rem;
-        }
-        
-        .payment-header p {
-            color: #636e72;
-            font-size: 1.1rem;
-        }
-        
-        .payment-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
             margin-bottom: 25px;
-            transition: transform 0.3s ease;
         }
-        
-        .payment-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .payment-title {
-            display: flex;
-            align-items: center;
+        .payment-method {
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .payment-title img {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-            object-fit: contain;
-        }
-        
-        .payment-title h2 {
-            color: var(--dark);
-            font-size: 1.5rem;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #636e72;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 8px;
-            font-size: 1rem;
-            transition: border 0.3s ease;
+            border-left: 4px solid #3498db;
         }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
+        .payment-method h2 {
+            margin-top: 0;
+            color: #3498db;
         }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--primary);
+        .qr-code {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .qr-code img {
+            max-width: 200px;
+            border: 1px solid #ddd;
+            background-color: white;
+            padding: 10px;
+        }
+        .contact-info {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(248, 249, 250, 0.8);
+            border-radius: 8px;
+            border-left: 4px solid #2ecc71;
+        }
+        .copy-btn {
+            background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 8px;
+            padding: 5px 10px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            text-align: center;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            margin-left: 10px;
+            transition: background-color 0.3s;
         }
-        
-        .btn:hover {
-            background-color: #5649c0;
+        .copy-btn:hover {
+            background-color: #2980b9;
         }
-        
-        .qris-container {
-            text-align: center;
-            padding: 20px 0;
-        }
-        
-        .qris-code {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px;
-            background-color: #f5f6fa;
+        .note {
+            background-color: #fff3cd;
             padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .qris-code img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        
-        .qris-instruction {
-            background-color: #f5f6fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-size: 0.9rem;
-        }
-        
-        .payment-methods {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-        
-        .method {
-            flex: 0 0 calc(25% - 15px);
-            text-align: center;
-            cursor: pointer;
-            padding: 15px 10px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .method:hover {
-            background-color: #f5f6fa;
-        }
-        
-        .method img {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
-            object-fit: contain;
-        }
-        
-        .method p {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        
-        .active-method {
-            background-color: #e6e6fa;
-            border: 1px solid var(--primary);
-        }
-        
-        .confirmation-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            animation: modalFadeIn 0.3s ease;
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .modal-content h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .modal-content p {
-            margin-bottom: 20px;
-            color: #636e72;
-        }
-        
-        .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        
-        .contact-btn {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
             border-radius: 8px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            transition: transform 0.3s ease;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
         }
-        
-        .contact-btn:hover {
-            transform: translateY(-3px);
-        }
-        
         .whatsapp-btn {
+            display: inline-block;
             background-color: #25D366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            font-weight: bold;
         }
-        
-        .telegram-btn {
-            background-color: #0088cc;
-        }
-        
-        .contact-btn img {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .method {
-                flex: 0 0 calc(50% - 10px);
-                margin-bottom: 15px;
-            }
-            
-            .container {
-                padding: 15px;
-                margin: 15px;
-            }
-            
-            .payment-card {
-                padding: 20px;
-            }
-            
-            .contact-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="payment-header">
-            <h1>Pembayaran Digital</h1>
-            <p>Pilih metode pembayaran yang paling nyaman untuk Anda</p>
+        <h1>Metode Pembayaran</h1>
+        
+        <div class="payment-method">
+            <h2>DANA</h2>
+            <p>Nomor: <span id="dana-number">0838××××××××</span> 
+               <button class="copy-btn" onclick="copyToClipboard('dana-number')">Salin</button></p>
         </div>
         
-        <div class="payment-methods">
-            <div class="method active-method" onclick="showPayment('dana')">
-                <img src="https://files.catbox.moe/dkdoir.png" alt="DANA">
-                <p>DANA</p>
-            </div>
-            <div class="method" onclick="showPayment('ovo')">
-                <img src="https://files.catbox.moe/kgn24p.jpg" alt="OVO">
-                <p>OVO</p>
-            </div>
-            <div class="method" onclick="showPayment('gopay')">
-                <img src="https://files.catbox.moe/7s8rce.png" alt="GoPay">
-                <p>GoPay</p>
-            </div>
-            <div class="method" onclick="showPayment('qris')">
-                <img src="https://files.catbox.moe/5fycag.png" alt="QRIS">
-                <p>QRIS</p>
-            </div>
+        <div class="payment-method">
+            <h2>OVO</h2>
+            <p>Nomor: <span id="ovo-number">0856××××××××</span> 
+               <button class="copy-btn" onclick="copyToClipboard('ovo-number')">Salin</button></p>
         </div>
         
-        <!-- Dana Payment -->
-        <div class="payment-card" id="dana-payment">
-            <div class="payment-title">
-                <img src="https://files.catbox.moe/dkdoir.png" alt="DANA">
-                <h2>Pembayaran via DANA</h2>
+        <div class="payment-method">
+            <h2>GOPAY</h2>
+            <p>Nomor: <span id="gopay-number">0856××××××××</span> 
+               <button class="copy-btn" onclick="copyToClipboard('gopay-number')">Salin</button></p>
+        </div>
+        
+        <div class="payment-method">
+            <h2>QRIS</h2>
+            <div class="qr-code">
+                <img src="https://files.catbox.moe/5fycag.png" alt="Pembayaran QRIS">
             </div>
+            <p>Scan kode QR di atas untuk melakukan pembayaran</p>
+        </div>
+        
+        <div class="note">
+            <h3>Konfirmasi Pembayaran</h3>
+            <p>Setelah melakukan pembayaran, harap kirim bukti transfer ke admin melalui:</p>
+            <ol>
+                <li>Screenshot bukti pembayaran yang berhasil</li>
+                <li>Detail pesanan Anda (jika ada)</li>
+                <li>Informasi akun Anda (jika diperlukan)</li>
+            </ol>
+        </div>
+        
+        <div class="contact-info">
+            <h2>Hubungi Admin</h2>
+            <a href="https://wa.me/6283895361019" class="whatsapp-btn" target="_blank">
+                Chat via WhatsApp
+            </a>
             
-            <form onsubmit="processPayment(event, 'DANA')">
-                <div class="form-group">
-                    <label for="dana-phone">Nomor Telepon DANA</label>
-                    <input type="tel" id="dana-phone" class="form-control" placeholder="08xxxxxxxxxx" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="dana-amount">Jumlah Pembayaran</label>
-                    <input type="number" id="dana-amount" class="form-control" placeholder="Rp 100.000" required>
-                </div>
-                
-                <button type="submit" class="btn">Bayar Sekarang</button>
-            </form>
-        </div>
-        
-        <!-- OVO Payment -->
-        <div class="payment-card" id="ovo-payment" style="display: none;">
-            <div class="payment-title">
-                <img src="https://files.catbox.moe/kgn24p.jpg" alt="OVO">
-                <h2>Pembayaran via OVO</h2>
-            </div>
-            
-            <form onsubmit="processPayment(event, 'OVO')">
-                <div class="form-group">
-                    <label for="ovo-phone">Nomor Telepon OVO</label>
-                    <input type="tel" id="ovo-phone" class="form-control" placeholder="08xxxxxxxxxx" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ovo-amount">Jumlah Pembayaran</label>
-                    <input type="number" id="ovo-amount" class="form-control" placeholder="Rp 100.000" required>
-                </div>
-                
-                <button type="submit" class="btn">Bayar Sekarang</button>
-            </form>
-        </div>
-        
-        <!-- GoPay Payment -->
-        <div class="payment-card" id="gopay-payment" style="display: none;">
-            <div class="payment-title">
-                <img src="https://files.catbox.moe/7s8rce.png" alt="GoPay">
-                <h2>Pembayaran via GoPay</h2>
-            </div>
-            
-            <form onsubmit="processPayment(event, 'GoPay')">
-                <div class="form-group">
-                    <label for="gopay-phone">Nomor Telepon GoPay</label>
-                    <input type="tel" id="gopay-phone" class="form-control" placeholder="08xxxxxxxxxx" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="gopay-amount">Jumlah Pembayaran</label>
-                    <input type="number" id="gopay-amount" class="form-control" placeholder="Rp 100.000" required>
-                </div>
-                
-                <button type="submit" class="btn">Bayar Sekarang</button>
-            </form>
-        </div>
-        
-        <!-- QRIS Payment -->
-        <div class="payment-card" id="qris-payment" style="display: none;">
-            <div class="payment-title">
-                <img src="https://files.catbox.moe/5fycag.png" alt="QRIS">
-                <h2>Pembayaran via QRIS</h2>
-            </div>
-            
-            <div class="qris-container">
-                <div class="qris-code">
-                    <!-- Ganti dengan QR code asli Anda -->
-                    <img src="https://files.catbox.moe/5fycag.png" alt="QR Code Pembayaran">
-                </div>
-                
-                <form onsubmit="processPayment(event, 'QRIS')">
-                    <div class="form-group">
-                        <label for="qris-amount">Jumlah Pembayaran</label>
-                        <input type="number" id="qris-amount" class="form-control" placeholder="Rp 100.000" required>
-                    </div>
-                    
-                    <button type="submit" class="btn">Konfirmasi Pembayaran</button>
-                </form>
-                
-                <div class="qris-instruction">
-                    <p><strong>Cara Pembayaran:</strong></p>
-                    <ol>
-                        <li>Buka aplikasi mobile banking atau e-wallet Anda</li>
-                        <li>Pilih fitur pembayaran QRIS</li>
-                        <li>Scan QR code di atas</li>
-                        <li>Masukkan nominal pembayaran</li>
-                        <li>Konfirmasi pembayaran</li>
-                    </ol>
-                </div>
-            </div>
+            <p style="margin-top: 15px;">Telegram: <a href="https://t.me/Sans12D" target="_blank">t.me/yanzturu</a></p>
         </div>
     </div>
-    
-    <!-- Confirmation Modal -->
-    <div class="confirmation-modal" id="confirmationModal">
-        <div class="modal-content">
-            <h2>Pembayaran Berhasil!</h2>
-            <p>Terima kasih telah melakukan pembayaran. Silahkan hubungi penjual untuk konfirmasi lebih lanjut.</p>
-            
-            <div class="contact-buttons">
-                <a id="whatsappBtn" href="#" class="contact-btn whatsapp-btn" target="_blank">
-                    <img src="https://files.catbox.moe/j2dk59.jpg" alt="WhatsApp">
-                    WhatsApp Penjual
-                </a>
-                <a id="telegramBtn" href="#" class="contact-btn telegram-btn" target="_blank">
-                    <img src="https://files.catbox.moe/pn0psm.png" alt="Telegram">
-                    Telegram Penjual
-                </a>
-            </div>
-        </div>
-    </div>
-    
+
     <script>
-        let currentPaymentMethod = '';
-        let paymentAmount = '';
-        
-        function showPayment(method) {
-            // Sembunyikan semua metode pembayaran
-            document.getElementById('dana-payment').style.display = 'none';
-            document.getElementById('ovo-payment').style.display = 'none';
-            document.getElementById('gopay-payment').style.display = 'none';
-            document.getElementById('qris-payment').style.display = 'none';
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.innerText;
             
-            // Tampilkan metode yang dipilih
-            document.getElementById(method + '-payment').style.display = 'block';
-            
-            // Update active class pada metode pembayaran
-            const methods = document.querySelectorAll('.method');
-            methods.forEach(m => m.classList.remove('active-method'));
-            event.currentTarget.classList.add('active-method');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Tersalin: ' + textToCopy);
+            }).catch(err => {
+                console.error('Gagal menyalin: ', err);
+            });
         }
-        
-        function processPayment(event, method) {
-            event.preventDefault();
-            
-            // Simpan data pembayaran
-            currentPaymentMethod = method;
-            const amountInput = document.getElementById(method.toLowerCase() + '-amount');
-            paymentAmount = amountInput.value;
-            
-            // Update link WhatsApp dan Telegram dengan nominal pembayaran
-            const whatsappMessage = `Halo, saya sudah melakukan pembayaran via ${method} sebesar Rp ${formatNumber(paymentAmount)}. Mohon konfirmasinya.`;
-            const telegramMessage = `Halo, saya sudah melakukan pembayaran via ${method} sebesar Rp ${formatNumber(paymentAmount)}. Mohon konfirmasinya.`;
-            
-            document.getElementById('whatsappBtn').href = `https://wa.me/6283895361019?text=${encodeURIComponent(whatsappMessage)}`;
-            document.getElementById('telegramBtn').href = `https://t.me/yanzturu?text=${encodeURIComponent(telegramMessage)}`;
-            
-            // Tampilkan modal konfirmasi
-            const modal = document.getElementById('confirmationModal');
-            modal.style.display = 'flex';
-            
-            // Reset form
-            event.target.reset();
-        }
-        
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        
-        // Tutup modal ketika klik di luar area modal
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('confirmationModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
